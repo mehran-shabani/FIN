@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../data/database/database.dart';
 import '../../../services/api_service.dart';
@@ -96,16 +97,17 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
 
             final response = await _apiService.syncExpense(dto);
 
-            // Update with server ID
-            final updatedExpense = expense.copyWith(
-              serverId: Value.ofNullable(response.serverId),
+            // Get the inserted expense and update with server ID
+            final insertedExpense = await _database.getExpense(id);
+            final updatedExpense = insertedExpense.copyWith(
+              serverId: Value.absentIfNull(response.serverId),
               synced: true,
               updatedAt: DateTime.now(),
             );
 
             await _database.updateExpense(updatedExpense);
           } catch (e) {
-            print('Sync failed: $e');
+            debugPrint('Sync failed: $e');
           }
         }
 
@@ -164,7 +166,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
           try {
             await _apiService.deleteExpense(expense.serverId!);
           } catch (e) {
-            print('Failed to delete from backend: $e');
+            debugPrint('Failed to delete from backend: $e');
           }
         }
 
@@ -226,14 +228,14 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
             final response = await _apiService.syncExpense(dto);
 
             final updatedExpense = expense.copyWith(
-              serverId: Value.ofNullable(response.serverId),
+              serverId: Value.absentIfNull(response.serverId),
               synced: true,
               updatedAt: DateTime.now(),
             );
 
             await _database.updateExpense(updatedExpense);
           } catch (e) {
-            print('Failed to sync expense ${expense.id}: $e');
+            debugPrint('Failed to sync expense ${expense.id}: $e');
           }
         }
 

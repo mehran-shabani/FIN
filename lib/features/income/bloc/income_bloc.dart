@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../data/database/database.dart';
 import '../../../services/api_service.dart';
@@ -80,9 +81,10 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
             
             final response = await _apiService.syncIncome(dto);
             
-            // Update with server ID
-            final updatedIncome = income.copyWith(
-              serverId: Value.ofNullable(response.serverId),
+            // Get the inserted income and update with server ID
+            final insertedIncome = await _database.getIncome(id);
+            final updatedIncome = insertedIncome.copyWith(
+              serverId: Value.absentIfNull(response.serverId),
               synced: true,
               updatedAt: DateTime.now(),
             );
@@ -90,7 +92,7 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
             await _database.updateIncome(updatedIncome);
           } catch (e) {
             // Sync failed, but local save succeeded
-            print('Sync failed: $e');
+            debugPrint('Sync failed: $e');
           }
         }
 
@@ -134,7 +136,7 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
           try {
             await _apiService.deleteExpense(income.serverId!);
           } catch (e) {
-            print('Failed to delete from backend: $e');
+            debugPrint('Failed to delete from backend: $e');
           }
         }
 
@@ -174,14 +176,14 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
 
             // Update with server ID
             final updatedIncome = income.copyWith(
-              serverId: Value.ofNullable(response.serverId),
+              serverId: Value.absentIfNull(response.serverId),
               synced: true,
               updatedAt: DateTime.now(),
             );
 
             await _database.updateIncome(updatedIncome);
           } catch (e) {
-            print('Failed to sync income ${income.id}: $e');
+            debugPrint('Failed to sync income ${income.id}: $e');
           }
         }
 
