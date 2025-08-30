@@ -8,8 +8,15 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  color: #333;
-  background: #f8f8f8;
+  color: var(--code-fg, #333);
+  background: var(--code-bg, #f8f8f8);
+}
+
+@media (prefers-color-scheme: dark) {
+  .hljs {
+    color: var(--code-fg-dark, #e6e6e6);
+    background: var(--code-bg-dark, #0f1116);
+  }
 }
 
 .hljs-comment,
