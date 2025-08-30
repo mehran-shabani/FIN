@@ -26,10 +26,7 @@ class OcrSuccess extends OcrState {
   final Uint8List imageBytes;
   final OcrReceiptResponse result;
 
-  const OcrSuccess({
-    required this.imageBytes,
-    required this.result,
-  });
+  const OcrSuccess({required this.imageBytes, required this.result});
 
   @override
   List<Object?> get props => [imageBytes, result];
@@ -39,10 +36,7 @@ class OcrError extends OcrState {
   final String message;
   final Uint8List? imageBytes;
 
-  const OcrError({
-    required this.message,
-    this.imageBytes,
-  });
+  const OcrError({required this.message, this.imageBytes});
 
   @override
   List<Object?> get props => [message, imageBytes];

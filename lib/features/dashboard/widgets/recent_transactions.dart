@@ -7,10 +7,7 @@ import '../../../services/rule_engine.dart';
 class RecentTransactions extends StatelessWidget {
   final List<Expense> expenses;
 
-  const RecentTransactions({
-    super.key,
-    required this.expenses,
-  });
+  const RecentTransactions({super.key, required this.expenses});
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +15,16 @@ class RecentTransactions extends StatelessWidget {
       return const Card(
         child: Padding(
           padding: EdgeInsets.all(16),
-          child: Center(
-            child: Text('هیچ تراکنشی وجود ندارد'),
-          ),
+          child: Center(child: Text('هیچ تراکنشی وجود ندارد')),
         ),
       );
     }
 
     return Card(
       child: Column(
-        children: expenses.map((expense) => _TransactionTile(expense: expense)).toList(),
+        children: expenses
+            .map((expense) => _TransactionTile(expense: expense))
+            .toList(),
       ),
     );
   }
@@ -41,7 +38,7 @@ class _TransactionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryName = RuleEngine.getCategoryDisplayName(expense.category);
-    
+
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -60,9 +57,9 @@ class _TransactionTile extends StatelessWidget {
       ),
       trailing: Text(
         CurrencyFormatter.formatWithSymbol(expense.amount, expense.currency),
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
       ),
       onTap: () {
         // Navigate to expense details

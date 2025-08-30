@@ -27,7 +27,7 @@ class NotificationService {
 
   Future<void> _initialize() async {
     await _initializeLocalNotifications();
-    
+
     if (!kIsWeb && SettingsService.pushEnabled) {
       await _initializeFirebaseMessaging();
     }
@@ -36,8 +36,10 @@ class NotificationService {
   Future<void> _initializeLocalNotifications() async {
     _localNotifications = FlutterLocalNotificationsPlugin();
 
-    const androidInitializationSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-    
+    const androidInitializationSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
+
     const iosInitializationSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
@@ -57,7 +59,7 @@ class NotificationService {
 
   Future<void> _initializeFirebaseMessaging() async {
     if (kIsWeb) return;
-    
+
     try {
       await Firebase.initializeApp();
       _firebaseMessaging = FirebaseMessaging.instance;
@@ -76,9 +78,10 @@ class NotificationService {
         if (token != null) {
           final settingsService = await SettingsService.getInstance();
           await settingsService.setFcmToken(token);
-          
+
           // Register with backend if sync is enabled
-          if (settingsService.isSyncEnabled() && SettingsService.backendApiKey != null) {
+          if (settingsService.isSyncEnabled() &&
+              SettingsService.backendApiKey != null) {
             await _registerWithBackend(token);
           }
         }
@@ -87,15 +90,16 @@ class NotificationService {
         _firebaseMessaging!.onTokenRefresh.listen((newToken) async {
           final settingsService = await SettingsService.getInstance();
           await settingsService.setFcmToken(newToken);
-          
-          if (settingsService.isSyncEnabled() && SettingsService.backendApiKey != null) {
+
+          if (settingsService.isSyncEnabled() &&
+              SettingsService.backendApiKey != null) {
             await _registerWithBackend(newToken);
           }
         });
 
         // Handle foreground messages
         FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
-        
+
         // Handle background messages
         FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
       }
@@ -108,7 +112,7 @@ class NotificationService {
     try {
       final settingsService = await SettingsService.getInstance();
       final apiService = ApiService(apiKey: SettingsService.backendApiKey);
-      
+
       final request = PushRegisterRequest(
         deviceId: settingsService.getDeviceId(),
         platform: kIsWeb ? 'web' : 'android',
@@ -152,12 +156,10 @@ class NotificationService {
       return status == PermissionStatus.granted;
     } else if (Platform.isIOS) {
       final result = await _localNotifications!
-          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
       return result ?? false;
     }
 
@@ -195,11 +197,11 @@ class NotificationService {
 
   Future<void> scheduleReceiptReminder() async {
     final settingsService = await SettingsService.getInstance();
-    
+
     if (!settingsService.isReceiptReminderEnabled()) return;
 
     final hour = settingsService.getReceiptReminderHour();
-    
+
     await _localNotifications!.zonedSchedule(
       1001, // Receipt reminder ID
       'یادآوری بارگذاری رسید',
@@ -216,7 +218,8 @@ class NotificationService {
         iOS: DarwinNotificationDetails(),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
@@ -240,12 +243,19 @@ class NotificationService {
 
   tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
     final now = tz.TZDateTime.now(tz.local);
-    var scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
-    
+    var scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+    );
+
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    
+
     return scheduledDate;
   }
 }

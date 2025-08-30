@@ -21,7 +21,7 @@ class RuleEngine {
     CategoryRule(pattern: 'مارکت', category: 'groceries'),
     CategoryRule(pattern: 'فروشگاه', category: 'groceries'),
     CategoryRule(pattern: 'سوپر', category: 'groceries'),
-    
+
     // Dining
     CategoryRule(pattern: 'restaurant', category: 'dining'),
     CategoryRule(pattern: 'cafe', category: 'dining'),
@@ -32,7 +32,7 @@ class RuleEngine {
     CategoryRule(pattern: 'کافه', category: 'dining'),
     CategoryRule(pattern: 'غذا', category: 'dining'),
     CategoryRule(pattern: 'پیتزا', category: 'dining'),
-    
+
     // Transport
     CategoryRule(pattern: 'taxi', category: 'transport'),
     CategoryRule(pattern: 'uber', category: 'transport'),
@@ -45,7 +45,7 @@ class RuleEngine {
     CategoryRule(pattern: 'مترو', category: 'transport'),
     CategoryRule(pattern: 'بنزین', category: 'transport'),
     CategoryRule(pattern: 'سوخت', category: 'transport'),
-    
+
     // Utilities
     CategoryRule(pattern: 'electric', category: 'utilities'),
     CategoryRule(pattern: 'water', category: 'utilities'),
@@ -57,7 +57,7 @@ class RuleEngine {
     CategoryRule(pattern: 'گاز', category: 'utilities'),
     CategoryRule(pattern: 'اینترنت', category: 'utilities'),
     CategoryRule(pattern: 'تلفن', category: 'utilities'),
-    
+
     // Healthcare
     CategoryRule(pattern: 'pharmacy', category: 'healthcare'),
     CategoryRule(pattern: 'doctor', category: 'healthcare'),
@@ -69,7 +69,7 @@ class RuleEngine {
     CategoryRule(pattern: 'بیمارستان', category: 'healthcare'),
     CategoryRule(pattern: 'کلینیک', category: 'healthcare'),
     CategoryRule(pattern: 'پزشکی', category: 'healthcare'),
-    
+
     // Personal
     CategoryRule(pattern: 'barber', category: 'personal'),
     CategoryRule(pattern: 'salon', category: 'personal'),
@@ -78,7 +78,7 @@ class RuleEngine {
     CategoryRule(pattern: 'آرایشگاه', category: 'personal'),
     CategoryRule(pattern: 'لباس', category: 'personal'),
     CategoryRule(pattern: 'کفش', category: 'personal'),
-    
+
     // Entertainment
     CategoryRule(pattern: 'cinema', category: 'entertainment'),
     CategoryRule(pattern: 'movie', category: 'entertainment'),
@@ -88,7 +88,7 @@ class RuleEngine {
     CategoryRule(pattern: 'فیلم', category: 'entertainment'),
     CategoryRule(pattern: 'بازی', category: 'entertainment'),
     CategoryRule(pattern: 'پارک', category: 'entertainment'),
-    
+
     // Education
     CategoryRule(pattern: 'school', category: 'education'),
     CategoryRule(pattern: 'university', category: 'education'),
@@ -98,7 +98,7 @@ class RuleEngine {
     CategoryRule(pattern: 'دانشگاه', category: 'education'),
     CategoryRule(pattern: 'دوره', category: 'education'),
     CategoryRule(pattern: 'کتاب', category: 'education'),
-    
+
     // Rent
     CategoryRule(pattern: 'rent', category: 'rent'),
     CategoryRule(pattern: 'housing', category: 'rent'),
@@ -106,11 +106,15 @@ class RuleEngine {
     CategoryRule(pattern: 'اجاره', category: 'rent'),
     CategoryRule(pattern: 'مسکن', category: 'rent'),
     CategoryRule(pattern: 'آپارتمان', category: 'rent'),
-    
+
     // Note-based rules (lower priority)
     CategoryRule(pattern: 'lunch', category: 'dining', isMerchantRule: false),
     CategoryRule(pattern: 'dinner', category: 'dining', isMerchantRule: false),
-    CategoryRule(pattern: 'breakfast', category: 'dining', isMerchantRule: false),
+    CategoryRule(
+      pattern: 'breakfast',
+      category: 'dining',
+      isMerchantRule: false,
+    ),
     CategoryRule(pattern: 'صبحانه', category: 'dining', isMerchantRule: false),
     CategoryRule(pattern: 'ناهار', category: 'dining', isMerchantRule: false),
     CategoryRule(pattern: 'شام', category: 'dining', isMerchantRule: false),
@@ -122,17 +126,17 @@ class RuleEngine {
     List<String>? itemNames,
   }) {
     final searchTexts = <String>[];
-    
+
     // Add merchant name (highest priority)
     if (merchant != null && merchant.isNotEmpty) {
       searchTexts.add(merchant.toLowerCase());
     }
-    
+
     // Add item names
     if (itemNames != null) {
       searchTexts.addAll(itemNames.map((name) => name.toLowerCase()));
     }
-    
+
     // Add note (lower priority)
     if (note != null && note.isNotEmpty) {
       searchTexts.add(note.toLowerCase());
@@ -181,7 +185,7 @@ class RuleEngine {
       'rent': 'اجاره',
       'other': 'سایر',
     };
-    
+
     return categoryNames[category] ?? category;
   }
 }

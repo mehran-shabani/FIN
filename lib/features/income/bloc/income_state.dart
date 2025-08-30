@@ -20,10 +20,7 @@ class IncomeLoaded extends IncomeState {
   final List<Income> incomes;
   final double totalAmount;
 
-  const IncomeLoaded({
-    required this.incomes,
-    required this.totalAmount,
-  });
+  const IncomeLoaded({required this.incomes, required this.totalAmount});
 
   @override
   List<Object?> get props => [incomes, totalAmount];
@@ -42,10 +39,7 @@ class IncomeSyncing extends IncomeState {
   final List<Income> incomes;
   final double totalAmount;
 
-  const IncomeSyncing({
-    required this.incomes,
-    required this.totalAmount,
-  });
+  const IncomeSyncing({required this.incomes, required this.totalAmount});
 
   @override
   List<Object?> get props => [incomes, totalAmount];

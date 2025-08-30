@@ -10,26 +10,30 @@ import '../data/models/common_dto.dart';
 class ApiService {
   late final Dio _dio;
   static const String baseUrl = 'https://golddrop.ir/api/finapp/v1';
-  
-  ApiService({String? apiKey}) {
-    _dio = Dio(BaseOptions(
-      baseUrl: baseUrl,
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
-      sendTimeout: const Duration(seconds: 30),
-      headers: {
-        'Content-Type': 'application/json',
-        if (apiKey != null) 'X-API-Key': apiKey,
-      },
-    ));
 
-    _dio.interceptors.add(LogInterceptor(
-      requestBody: kDebugMode,
-      responseBody: kDebugMode,
-      logPrint: (object) {
-        if (kDebugMode) print(object);
-      },
-    ));
+  ApiService({String? apiKey}) {
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        sendTimeout: const Duration(seconds: 30),
+        headers: {
+          'Content-Type': 'application/json',
+          if (apiKey != null) 'X-API-Key': apiKey,
+        },
+      ),
+    );
+
+    _dio.interceptors.add(
+      LogInterceptor(
+        requestBody: kDebugMode,
+        responseBody: kDebugMode,
+        logPrint: (object) {
+          if (kDebugMode) print(object);
+        },
+      ),
+    );
   }
 
   void setHeaders(Map<String, String> headers) {
@@ -58,8 +62,14 @@ class ApiService {
     return ExpenseResponseDto.fromJson(response.data);
   }
 
-  Future<ExpenseResponseDto> updateExpense(String serverId, ExpenseDto expense) async {
-    final response = await _dio.put('/data/expenses/$serverId', data: expense.toJson());
+  Future<ExpenseResponseDto> updateExpense(
+    String serverId,
+    ExpenseDto expense,
+  ) async {
+    final response = await _dio.put(
+      '/data/expenses/$serverId',
+      data: expense.toJson(),
+    );
     return ExpenseResponseDto.fromJson(response.data);
   }
 
@@ -71,10 +81,10 @@ class ApiService {
     required String from,
     required String to,
   }) async {
-    final response = await _dio.get('/data/summary', queryParameters: {
-      'from': from,
-      'to': to,
-    });
+    final response = await _dio.get(
+      '/data/summary',
+      queryParameters: {'from': from, 'to': to},
+    );
     return SummaryResponse.fromJson(response.data);
   }
 
@@ -95,9 +105,7 @@ class ApiService {
     final response = await _dio.post(
       '/ai/receipt',
       data: formData,
-      options: Options(
-        headers: {'Content-Type': 'multipart/form-data'},
-      ),
+      options: Options(headers: {'Content-Type': 'multipart/form-data'}),
     );
     return OcrReceiptResponse.fromJson(response.data);
   }
@@ -129,7 +137,10 @@ class ApiService {
 
   // Daily evaluation
   Future<ApiResponse> triggerDailyEval(DailyEvalRequest request) async {
-    final response = await _dio.post('/eval/daily/trigger', data: request.toJson());
+    final response = await _dio.post(
+      '/eval/daily/trigger',
+      data: request.toJson(),
+    );
     return ApiResponse.fromJson(response.data);
   }
 
@@ -140,7 +151,10 @@ class ApiService {
 
   // Receipt reminders
   Future<ApiResponse> setReceiptReminder(ReceiptReminderRequest request) async {
-    final response = await _dio.post('/reminders/receipt', data: request.toJson());
+    final response = await _dio.post(
+      '/reminders/receipt',
+      data: request.toJson(),
+    );
     return ApiResponse.fromJson(response.data);
   }
 
@@ -148,10 +162,7 @@ class ApiService {
   Future<Uint8List> exportExcelMonthly(String month) async {
     final response = await _dio.get(
       '/export/excel',
-      queryParameters: {
-        'period': 'monthly',
-        'month': month,
-      },
+      queryParameters: {'period': 'monthly', 'month': month},
       options: Options(responseType: ResponseType.bytes),
     );
     return response.data as Uint8List;

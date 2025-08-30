@@ -49,10 +49,7 @@ class SummaryCard extends StatelessWidget {
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 4),
-              Text(
-                subtitle!,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
+              Text(subtitle!, style: Theme.of(context).textTheme.bodySmall),
             ],
           ],
         ),

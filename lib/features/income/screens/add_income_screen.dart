@@ -17,7 +17,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
   final _amountController = TextEditingController();
   final _sourceController = TextEditingController();
   final _noteController = TextEditingController();
-  
+
   DateTime _selectedDate = DateTime.now();
   String _selectedCurrency = 'IRR';
 
@@ -34,10 +34,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
       appBar: AppBar(
         title: const Text('افزودن درآمد'),
         actions: [
-          TextButton(
-            onPressed: _submitForm,
-            child: const Text('ذخیره'),
-          ),
+          TextButton(onPressed: _submitForm, child: const Text('ذخیره')),
         ],
       ),
       body: Form(
@@ -52,14 +49,19 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                 controller: _amountController,
                 decoration: InputDecoration(
                   labelText: 'مبلغ *',
-                  suffixText: CurrencyFormatter.getCurrencySymbol(_selectedCurrency),
+                  suffixText: CurrencyFormatter.getCurrencySymbol(
+                    _selectedCurrency,
+                  ),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'لطفاً مبلغ را وارد کنید';
                   }
-                  final amount = CurrencyFormatter.parseAmount(value, _selectedCurrency);
+                  final amount = CurrencyFormatter.parseAmount(
+                    value,
+                    _selectedCurrency,
+                  );
                   if (amount == null || amount <= 0) {
                     return 'مبلغ باید بیشتر از صفر باشد';
                   }
@@ -105,17 +107,14 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
               const SizedBox(height: 24),
 
               // Currency selector
-              Text(
-                'ارز',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+              Text('ارز', style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
                 value: _selectedCurrency,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                items: CurrencyFormatter.getSupportedCurrencies().map((currency) {
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+                items: CurrencyFormatter.getSupportedCurrencies().map((
+                  currency,
+                ) {
                   return DropdownMenuItem(
                     value: currency,
                     child: Text(CurrencyFormatter.getCurrencyName(currency)),
@@ -152,23 +151,28 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      final amount = CurrencyFormatter.parseAmount(_amountController.text, _selectedCurrency)!;
-      
+      final amount = CurrencyFormatter.parseAmount(
+        _amountController.text,
+        _selectedCurrency,
+      )!;
+
       context.read<IncomeBloc>().add(
         AddIncome(
           amount: amount,
           currency: _selectedCurrency,
           date: _selectedDate,
-          source: _sourceController.text.isEmpty ? null : _sourceController.text,
+          source: _sourceController.text.isEmpty
+              ? null
+              : _sourceController.text,
           note: _noteController.text.isEmpty ? null : _noteController.text,
         ),
       );
 
       Navigator.of(context).pop();
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('درآمد با موفقیت اضافه شد')),
-      );
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('درآمد با موفقیت اضافه شد')));
     }
   }
 

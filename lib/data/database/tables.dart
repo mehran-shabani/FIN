@@ -4,7 +4,8 @@ import 'package:drift/drift.dart';
 class Incomes extends Table {
   TextColumn get id => text().withLength(min: 1, max: 50)();
   RealColumn get amount => real()();
-  TextColumn get currency => text().withLength(min: 1, max: 10).withDefault(const Constant('IRR'))();
+  TextColumn get currency =>
+      text().withLength(min: 1, max: 10).withDefault(const Constant('IRR'))();
   DateTimeColumn get date => dateTime()();
   TextColumn get source => text().nullable()();
   TextColumn get note => text().nullable()();
@@ -21,14 +22,16 @@ class Incomes extends Table {
 class Expenses extends Table {
   TextColumn get id => text().withLength(min: 1, max: 50)();
   RealColumn get amount => real()();
-  TextColumn get currency => text().withLength(min: 1, max: 10).withDefault(const Constant('IRR'))();
+  TextColumn get currency =>
+      text().withLength(min: 1, max: 10).withDefault(const Constant('IRR'))();
   DateTimeColumn get date => dateTime()();
   TextColumn get merchant => text().nullable()();
   TextColumn get category => text().withDefault(const Constant('other'))();
   RealColumn get tax => real().withDefault(const Constant(0))();
   RealColumn get tip => real().withDefault(const Constant(0))();
   TextColumn get note => text().nullable()();
-  TextColumn get source => text().withDefault(const Constant('manual'))(); // 'receipt' or 'manual'
+  TextColumn get source =>
+      text().withDefault(const Constant('manual'))(); // 'receipt' or 'manual'
   TextColumn get imagePath => text().nullable()();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
@@ -42,7 +45,8 @@ class Expenses extends Table {
 // Expense items table (for detailed receipt breakdown)
 class ExpenseItems extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get expenseId => text().references(Expenses, #id, onDelete: KeyAction.cascade)();
+  TextColumn get expenseId =>
+      text().references(Expenses, #id, onDelete: KeyAction.cascade)();
   TextColumn get name => text()();
   IntColumn get qty => integer().withDefault(const Constant(1))();
   RealColumn get unitPrice => real()();
@@ -60,7 +64,7 @@ class KvStore extends Table {
 // Available categories (constant list)
 const List<String> expenseCategories = [
   'groceries',
-  'dining', 
+  'dining',
   'transport',
   'utilities',
   'healthcare',

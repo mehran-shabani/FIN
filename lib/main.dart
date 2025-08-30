@@ -15,21 +15,23 @@ import 'features/ocr/bloc/ocr_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize services
   final settingsService = await SettingsService.getInstance();
   final notificationService = await NotificationService.getInstance();
-  
+
   // Set preferred orientations
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  
-  runApp(FinSnapApp(
-    settingsService: settingsService,
-    notificationService: notificationService,
-  ));
+
+  runApp(
+    FinSnapApp(
+      settingsService: settingsService,
+      notificationService: notificationService,
+    ),
+  );
 }
 
 class FinSnapApp extends StatelessWidget {
@@ -46,17 +48,12 @@ class FinSnapApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AppDatabase>(
-          create: (context) => AppDatabase(),
-        ),
+        RepositoryProvider<AppDatabase>(create: (context) => AppDatabase()),
         RepositoryProvider<ApiService>(
-          create: (context) => ApiService(
-            apiKey: SettingsService.backendApiKey,
-          ),
+          create: (context) =>
+              ApiService(apiKey: SettingsService.backendApiKey),
         ),
-        RepositoryProvider<SettingsService>.value(
-          value: settingsService,
-        ),
+        RepositoryProvider<SettingsService>.value(value: settingsService),
         RepositoryProvider<NotificationService>.value(
           value: notificationService,
         ),
@@ -89,29 +86,25 @@ class FinSnapApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: ThemeMode.light, // Force light theme for monochrome design
-          
           // Localization
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('fa', 'IR'),
-            Locale('en', 'US'),
-          ],
+          supportedLocales: const [Locale('fa', 'IR'), Locale('en', 'US')],
           locale: Locale(settingsService.getLanguage(), 'IR'),
-          
+
           // RTL support
           builder: (context, child) {
             return Directionality(
-              textDirection: settingsService.getLanguage() == 'fa' 
-                  ? TextDirection.rtl 
+              textDirection: settingsService.getLanguage() == 'fa'
+                  ? TextDirection.rtl
                   : TextDirection.ltr,
               child: child!,
             );
           },
-          
+
           home: const DashboardScreen(),
           debugShowCheckedModeBanner: false,
         ),

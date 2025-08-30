@@ -21,10 +21,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     required AppDatabase database,
     required ApiService apiService,
     required SettingsService settingsService,
-  })  : _database = database,
-        _apiService = apiService,
-        _settingsService = settingsService,
-        super(const ExpenseInitial()) {
+  }) : _database = database,
+       _apiService = apiService,
+       _settingsService = settingsService,
+       super(const ExpenseInitial()) {
     on<LoadExpenses>(_onLoadExpenses);
     on<AddExpense>(_onAddExpense);
     on<UpdateExpense>(_onUpdateExpense);
@@ -33,7 +33,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     on<SyncExpenses>(_onSyncExpenses);
   }
 
-  Future<void> _onLoadExpenses(LoadExpenses event, Emitter<ExpenseState> emit) async {
+  Future<void> _onLoadExpenses(
+    LoadExpenses event,
+    Emitter<ExpenseState> emit,
+  ) async {
     try {
       emit(const ExpenseLoading());
       await _loadAndEmitExpenses(emit);
@@ -42,7 +45,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     }
   }
 
-  Future<void> _onAddExpense(AddExpense event, Emitter<ExpenseState> emit) async {
+  Future<void> _onAddExpense(
+    AddExpense event,
+    Emitter<ExpenseState> emit,
+  ) async {
     try {
       if (state is ExpenseLoaded) {
         emit(const ExpenseLoading());
@@ -118,7 +124,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     }
   }
 
-  Future<void> _onUpdateExpense(UpdateExpense event, Emitter<ExpenseState> emit) async {
+  Future<void> _onUpdateExpense(
+    UpdateExpense event,
+    Emitter<ExpenseState> emit,
+  ) async {
     try {
       if (state is ExpenseLoaded) {
         emit(const ExpenseLoading());
@@ -134,7 +143,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
         if (event.items != null) {
           // Delete existing items
           await _database.deleteExpenseItems(event.expense.id);
-          
+
           // Add new items
           for (final item in event.items!) {
             final expenseItem = ExpenseItemsCompanion(
@@ -154,7 +163,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     }
   }
 
-  Future<void> _onDeleteExpense(DeleteExpense event, Emitter<ExpenseState> emit) async {
+  Future<void> _onDeleteExpense(
+    DeleteExpense event,
+    Emitter<ExpenseState> emit,
+  ) async {
     try {
       if (state is ExpenseLoaded) {
         emit(const ExpenseLoading());
@@ -172,7 +184,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
 
         // Delete expense items
         await _database.deleteExpenseItems(event.id);
-        
+
         // Delete expense
         await _database.deleteExpense(event.id);
 
@@ -183,7 +195,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     }
   }
 
-  Future<void> _onFilterExpenses(FilterExpenses event, Emitter<ExpenseState> emit) async {
+  Future<void> _onFilterExpenses(
+    FilterExpenses event,
+    Emitter<ExpenseState> emit,
+  ) async {
     try {
       emit(const ExpenseLoading());
       await _loadAndEmitExpenses(
@@ -198,17 +213,24 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     }
   }
 
-  Future<void> _onSyncExpenses(SyncExpenses event, Emitter<ExpenseState> emit) async {
+  Future<void> _onSyncExpenses(
+    SyncExpenses event,
+    Emitter<ExpenseState> emit,
+  ) async {
     try {
       if (state is ExpenseLoaded && _settingsService.isSyncEnabled()) {
         final currentState = state as ExpenseLoaded;
-        emit(ExpenseSyncing(
-          expenses: currentState.expenses,
-          totalAmount: currentState.totalAmount,
-          categoryTotals: currentState.categoryTotals,
-        ));
+        emit(
+          ExpenseSyncing(
+            expenses: currentState.expenses,
+            totalAmount: currentState.totalAmount,
+            categoryTotals: currentState.categoryTotals,
+          ),
+        );
 
-        final unsyncedExpenses = currentState.expenses.where((expense) => !expense.synced).toList();
+        final unsyncedExpenses = currentState.expenses
+            .where((expense) => !expense.synced)
+            .toList();
 
         for (final expense in unsyncedExpenses) {
           try {
@@ -270,31 +292,38 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
 
     if (searchQuery != null && searchQuery.isNotEmpty) {
       query = query
-        ..where((e) =>
-            e.merchant.contains(searchQuery) |
-            e.note.contains(searchQuery));
+        ..where(
+          (e) =>
+              e.merchant.contains(searchQuery) | e.note.contains(searchQuery),
+        );
     }
 
     // Order by date descending
     query = query..orderBy([(e) => OrderingTerm.desc(e.date)]);
 
     final expenses = await query.get();
-    final totalAmount = expenses.fold<double>(0, (sum, expense) => sum + expense.amount);
+    final totalAmount = expenses.fold<double>(
+      0,
+      (sum, expense) => sum + expense.amount,
+    );
 
     // Calculate category totals
     final categoryTotals = <String, double>{};
     for (final expense in expenses) {
-      categoryTotals[expense.category] = (categoryTotals[expense.category] ?? 0) + expense.amount;
+      categoryTotals[expense.category] =
+          (categoryTotals[expense.category] ?? 0) + expense.amount;
     }
 
-    emit(ExpenseLoaded(
-      expenses: expenses,
-      totalAmount: totalAmount,
-      categoryTotals: categoryTotals,
-      appliedCategory: category,
-      appliedFromDate: fromDate,
-      appliedToDate: toDate,
-      appliedSearchQuery: searchQuery,
-    ));
+    emit(
+      ExpenseLoaded(
+        expenses: expenses,
+        totalAmount: totalAmount,
+        categoryTotals: categoryTotals,
+        appliedCategory: category,
+        appliedFromDate: fromDate,
+        appliedToDate: toDate,
+        appliedSearchQuery: searchQuery,
+      ),
+    );
   }
 }

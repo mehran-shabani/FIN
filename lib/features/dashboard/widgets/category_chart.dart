@@ -6,10 +6,7 @@ import '../../../services/rule_engine.dart';
 class CategoryChart extends StatelessWidget {
   final Map<String, double> categoryTotals;
 
-  const CategoryChart({
-    super.key,
-    required this.categoryTotals,
-  });
+  const CategoryChart({super.key, required this.categoryTotals});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +31,17 @@ class CategoryChart extends StatelessWidget {
   }
 
   List<PieChartSectionData> _generateSections() {
-    final total = categoryTotals.values.fold<double>(0, (sum, value) => sum + value);
+    final total = categoryTotals.values.fold<double>(
+      0,
+      (sum, value) => sum + value,
+    );
     final colors = _getColorPalette();
-    
+
     return categoryTotals.entries.map((entry) {
       final percentage = (entry.value / total * 100);
-      final colorIndex = categoryTotals.keys.toList().indexOf(entry.key) % colors.length;
-      
+      final colorIndex =
+          categoryTotals.keys.toList().indexOf(entry.key) % colors.length;
+
       return PieChartSectionData(
         value: entry.value,
         title: '${percentage.toStringAsFixed(1)}%',
@@ -75,22 +76,20 @@ class CategoryChart extends StatelessWidget {
 class CategoryLegend extends StatelessWidget {
   final Map<String, double> categoryTotals;
 
-  const CategoryLegend({
-    super.key,
-    required this.categoryTotals,
-  });
+  const CategoryLegend({super.key, required this.categoryTotals});
 
   @override
   Widget build(BuildContext context) {
     final colors = _getColorPalette();
-    
+
     return Wrap(
       spacing: 16,
       runSpacing: 8,
       children: categoryTotals.entries.map((entry) {
-        final colorIndex = categoryTotals.keys.toList().indexOf(entry.key) % colors.length;
+        final colorIndex =
+            categoryTotals.keys.toList().indexOf(entry.key) % colors.length;
         final categoryName = RuleEngine.getCategoryDisplayName(entry.key);
-        
+
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -103,10 +102,7 @@ class CategoryLegend extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            Text(
-              categoryName,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            Text(categoryName, style: Theme.of(context).textTheme.bodySmall),
           ],
         );
       }).toList(),

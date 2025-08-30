@@ -51,11 +51,7 @@ Map<String, dynamic> _$CategoryRequestToJson(CategoryRequest instance) =>
     };
 
 CategoryResponse _$CategoryResponseFromJson(Map<String, dynamic> json) =>
-    CategoryResponse(
-      category: json['category'] as String,
-    );
+    CategoryResponse(category: json['category'] as String);
 
 Map<String, dynamic> _$CategoryResponseToJson(CategoryResponse instance) =>
-    <String, dynamic>{
-      'category': instance.category,
-    };
+    <String, dynamic>{'category': instance.category};
