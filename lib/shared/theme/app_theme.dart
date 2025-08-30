@@ -20,12 +20,12 @@ class AppTheme {
         primary: primaryBlack,
         secondary: mediumGray,
         surface: primaryWhite,
-        background: primaryWhite,
+        // background: primaryWhite, // Deprecated, using surface instead
         error: primaryBlack,
         onPrimary: primaryWhite,
         onSecondary: primaryWhite,
         onSurface: primaryBlack,
-        onBackground: primaryBlack,
+        // onBackground: primaryBlack, // Deprecated, using onSurface instead
         onError: primaryWhite,
       ),
 
@@ -242,26 +242,26 @@ class AppTheme {
 
       // Checkbox theme
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return primaryBlack;
           }
           return primaryWhite;
         }),
-        checkColor: MaterialStateProperty.all(primaryWhite),
+        checkColor: WidgetStateProperty.all(primaryWhite),
         side: const BorderSide(color: primaryBlack, width: 2),
       ),
 
       // Switch theme
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return primaryBlack;
           }
           return primaryWhite;
         }),
-        trackColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return mediumGray;
           }
           return lightGray;
@@ -289,12 +289,12 @@ class AppTheme {
         primary: primaryWhite,
         secondary: lightGray,
         surface: primaryBlack,
-        background: primaryBlack,
+        // background: primaryBlack, // Deprecated, using surface instead
         error: primaryWhite,
         onPrimary: primaryBlack,
         onSecondary: primaryBlack,
         onSurface: primaryWhite,
-        onBackground: primaryWhite,
+        // onBackground: primaryWhite, // Deprecated, using onSurface instead
         onError: primaryBlack,
       ),
 

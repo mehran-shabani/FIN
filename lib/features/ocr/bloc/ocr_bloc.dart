@@ -1,5 +1,5 @@
-import 'dart:typed_data';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../services/api_service.dart';
 import '../../../services/settings_service.dart';
@@ -60,7 +60,7 @@ class OcrBloc extends Bloc<OcrEvent, OcrState> {
         ));
       } catch (e) {
         // Fallback to local processing if backend fails
-        print('Backend OCR failed, falling back to local: $e');
+        debugPrint('Backend OCR failed, falling back to local: $e');
         final result = _processReceiptLocally(event.imageBytes, event.hints);
         emit(OcrSuccess(
           imageBytes: event.imageBytes,
@@ -101,7 +101,7 @@ class OcrBloc extends Bloc<OcrEvent, OcrState> {
     // In a real implementation, you might use a local OCR library like ML Kit
     
     final now = DateTime.now();
-    final defaultCategory = 'other';
+    const defaultCategory = 'other';
     
     // Try to parse hints for basic information
     double amount = 0;
