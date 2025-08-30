@@ -100,7 +100,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
             // Get the inserted expense and update with server ID
             final insertedExpense = await _database.getExpense(id);
             final updatedExpense = insertedExpense.copyWith(
-              serverId: Value.absentIfNull(response.serverId),
+              serverId: response.serverId ?? insertedExpense.serverId,
               synced: true,
               updatedAt: DateTime.now(),
             );
