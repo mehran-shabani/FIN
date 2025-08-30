@@ -42,18 +42,18 @@ class AddExpense extends ExpenseEvent {
 
   @override
   List<Object?> get props => [
-        amount,
-        currency,
-        date,
-        merchant,
-        category,
-        tax,
-        tip,
-        note,
-        source,
-        imagePath,
-        items,
-      ];
+    amount,
+    currency,
+    date,
+    merchant,
+    category,
+    tax,
+    tip,
+    note,
+    source,
+    imagePath,
+    items,
+  ];
 }
 
 class UpdateExpense extends ExpenseEvent {

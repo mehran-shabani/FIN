@@ -14,7 +14,7 @@ class AppTheme {
       brightness: Brightness.light,
       primaryColor: primaryBlack,
       scaffoldBackgroundColor: primaryWhite,
-      
+
       // Color scheme
       colorScheme: const ColorScheme.light(
         primary: primaryBlack,
@@ -60,13 +60,8 @@ class AppTheme {
           backgroundColor: primaryBlack,
           foregroundColor: primaryWhite,
           elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
 
@@ -74,23 +69,15 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: primaryBlack,
           side: const BorderSide(color: primaryBlack, width: 2),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
 
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: primaryBlack,
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
 
@@ -202,16 +189,10 @@ class AppTheme {
       ),
 
       // Icon theme
-      iconTheme: const IconThemeData(
-        color: primaryBlack,
-        size: 24,
-      ),
+      iconTheme: const IconThemeData(color: primaryBlack, size: 24),
 
       // Divider theme
-      dividerTheme: const DividerThemeData(
-        color: lightGray,
-        thickness: 1,
-      ),
+      dividerTheme: const DividerThemeData(color: lightGray, thickness: 1),
 
       // Bottom navigation bar theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -234,10 +215,7 @@ class AppTheme {
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
-        contentTextStyle: const TextStyle(
-          color: primaryBlack,
-          fontSize: 16,
-        ),
+        contentTextStyle: const TextStyle(color: primaryBlack, fontSize: 16),
       ),
 
       // Checkbox theme
@@ -283,7 +261,7 @@ class AppTheme {
       brightness: Brightness.dark,
       primaryColor: primaryWhite,
       scaffoldBackgroundColor: primaryBlack,
-      
+
       // Color scheme
       colorScheme: const ColorScheme.dark(
         primary: primaryWhite,
@@ -329,13 +307,8 @@ class AppTheme {
           backgroundColor: primaryWhite,
           foregroundColor: primaryBlack,
           elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
 
@@ -343,23 +316,15 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: primaryWhite,
           side: const BorderSide(color: primaryWhite, width: 2),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
 
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: primaryWhite,
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
 
@@ -443,10 +408,7 @@ class AppTheme {
       ),
 
       // Icon theme
-      iconTheme: const IconThemeData(
-        color: primaryWhite,
-        size: 24,
-      ),
+      iconTheme: const IconThemeData(color: primaryWhite, size: 24),
 
       // Bottom navigation bar theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(

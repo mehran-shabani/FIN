@@ -39,11 +39,7 @@ class CategoryRequest {
   final List<ExpenseItemDto> items;
   final String? note;
 
-  const CategoryRequest({
-    this.merchant,
-    required this.items,
-    this.note,
-  });
+  const CategoryRequest({this.merchant, required this.items, this.note});
 
   factory CategoryRequest.fromJson(Map<String, dynamic> json) =>
       _$CategoryRequestFromJson(json);
@@ -55,9 +51,7 @@ class CategoryRequest {
 class CategoryResponse {
   final String category;
 
-  const CategoryResponse({
-    required this.category,
-  });
+  const CategoryResponse({required this.category});
 
   factory CategoryResponse.fromJson(Map<String, dynamic> json) =>
       _$CategoryResponseFromJson(json);

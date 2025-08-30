@@ -51,7 +51,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         children: [
           // Filter chips
           if (_hasActiveFilters()) _buildFilterChips(),
-          
+
           // Transactions list
           Expanded(
             child: BlocBuilder<ExpenseBloc, ExpenseState>(
@@ -74,11 +74,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   );
                 } else if (state is ExpenseLoaded) {
                   if (state.expenses.isEmpty) {
-                    return const Center(
-                      child: Text('هیچ تراکنشی یافت نشد'),
-                    );
+                    return const Center(child: Text('هیچ تراکنشی یافت نشد'));
                   }
-                  
+
                   return RefreshIndicator(
                     onRefresh: () async => _loadExpenses(),
                     child: ListView.builder(
@@ -90,7 +88,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     ),
                   );
                 }
-                
+
                 return const Center(child: Text('شروع کنید'));
               },
             ),
@@ -108,9 +106,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
 
   bool _hasActiveFilters() {
     return _selectedCategory != null ||
-           _fromDate != null ||
-           _toDate != null ||
-           _searchController.text.isNotEmpty;
+        _fromDate != null ||
+        _toDate != null ||
+        _searchController.text.isNotEmpty;
   }
 
   Widget _buildFilterChips() {
@@ -121,7 +119,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         children: [
           if (_selectedCategory != null)
             Chip(
-              label: Text(RuleEngine.getCategoryDisplayName(_selectedCategory!)),
+              label: Text(
+                RuleEngine.getCategoryDisplayName(_selectedCategory!),
+              ),
               onDeleted: () {
                 setState(() {
                   _selectedCategory = null;
@@ -177,11 +177,12 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               decoration: const InputDecoration(labelText: 'دسته‌بندی'),
               items: [
                 const DropdownMenuItem(value: null, child: Text('همه')),
-                ...RuleEngine.getAvailableCategories().map((category) =>
-                  DropdownMenuItem(
+                ...RuleEngine.getAvailableCategories().map(
+                  (category) => DropdownMenuItem(
                     value: category,
                     child: Text(RuleEngine.getCategoryDisplayName(category)),
-                  )),
+                  ),
+                ),
               ],
               onChanged: (value) {
                 setState(() {
@@ -234,7 +235,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         category: _selectedCategory,
         fromDate: _fromDate,
         toDate: _toDate,
-        searchQuery: _searchController.text.isEmpty ? null : _searchController.text,
+        searchQuery: _searchController.text.isEmpty
+            ? null
+            : _searchController.text,
       ),
     );
   }
@@ -254,7 +257,7 @@ class _ExpenseListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryName = RuleEngine.getCategoryDisplayName(expense.category);
-    
+
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -276,9 +279,9 @@ class _ExpenseListTile extends StatelessWidget {
       ),
       trailing: Text(
         CurrencyFormatter.formatWithSymbol(expense.amount, expense.currency),
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
       ),
       onTap: () {
         // Navigate to expense details

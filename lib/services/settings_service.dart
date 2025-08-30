@@ -4,9 +4,9 @@ import 'package:uuid/uuid.dart';
 class SettingsService {
   static SettingsService? _instance;
   static SharedPreferences? _prefs;
-  
+
   SettingsService._();
-  
+
   static Future<SettingsService> getInstance() async {
     _instance ??= SettingsService._();
     _prefs ??= await SharedPreferences.getInstance();
@@ -117,7 +117,10 @@ class SettingsService {
 
   // Environment variables
   static String get apiBaseUrl {
-    return const String.fromEnvironment('API_BASE_URL', defaultValue: 'https://golddrop.ir');
+    return const String.fromEnvironment(
+      'API_BASE_URL',
+      defaultValue: 'https://golddrop.ir',
+    );
   }
 
   static String? get backendApiKey {
@@ -129,11 +132,17 @@ class SettingsService {
   }
 
   static bool get sendReceiptsToCloud {
-    return const bool.fromEnvironment('SEND_RECEIPTS_TO_CLOUD', defaultValue: true);
+    return const bool.fromEnvironment(
+      'SEND_RECEIPTS_TO_CLOUD',
+      defaultValue: true,
+    );
   }
 
   static String get defaultCurrency {
-    return const String.fromEnvironment('DEFAULT_CURRENCY', defaultValue: 'IRR');
+    return const String.fromEnvironment(
+      'DEFAULT_CURRENCY',
+      defaultValue: 'IRR',
+    );
   }
 
   static String? get fcmWebVapidKey {

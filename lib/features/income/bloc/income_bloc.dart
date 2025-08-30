@@ -21,10 +21,10 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
     required AppDatabase database,
     required ApiService apiService,
     required SettingsService settingsService,
-  })  : _database = database,
-        _apiService = apiService,
-        _settingsService = settingsService,
-        super(const IncomeInitial()) {
+  }) : _database = database,
+       _apiService = apiService,
+       _settingsService = settingsService,
+       super(const IncomeInitial()) {
     on<LoadIncomes>(_onLoadIncomes);
     on<AddIncome>(_onAddIncome);
     on<UpdateIncome>(_onUpdateIncome);
@@ -32,17 +32,20 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
     on<SyncIncomes>(_onSyncIncomes);
   }
 
-  Future<void> _onLoadIncomes(LoadIncomes event, Emitter<IncomeState> emit) async {
+  Future<void> _onLoadIncomes(
+    LoadIncomes event,
+    Emitter<IncomeState> emit,
+  ) async {
     try {
       emit(const IncomeLoading());
-      
+
       final incomes = await _database.getAllIncomes();
-      final totalAmount = incomes.fold<double>(0, (sum, income) => sum + income.amount);
-      
-      emit(IncomeLoaded(
-        incomes: incomes,
-        totalAmount: totalAmount,
-      ));
+      final totalAmount = incomes.fold<double>(
+        0,
+        (sum, income) => sum + income.amount,
+      );
+
+      emit(IncomeLoaded(incomes: incomes, totalAmount: totalAmount));
     } catch (e) {
       emit(IncomeError('خطا در بارگذاری درآمدها: ${e.toString()}'));
     }
@@ -78,9 +81,9 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
               source: event.source,
               note: event.note,
             );
-            
+
             final response = await _apiService.syncIncome(dto);
-            
+
             // Get the inserted income and update with server ID
             final insertedIncome = await _database.getIncome(id);
             final updatedIncome = insertedIncome.copyWith(
@@ -88,7 +91,7 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
               synced: true,
               updatedAt: DateTime.now(),
             );
-            
+
             await _database.updateIncome(updatedIncome);
           } catch (e) {
             // Sync failed, but local save succeeded
@@ -104,7 +107,10 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
     }
   }
 
-  Future<void> _onUpdateIncome(UpdateIncome event, Emitter<IncomeState> emit) async {
+  Future<void> _onUpdateIncome(
+    UpdateIncome event,
+    Emitter<IncomeState> emit,
+  ) async {
     try {
       if (state is IncomeLoaded) {
         emit(const IncomeLoading());
@@ -124,13 +130,16 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
     }
   }
 
-  Future<void> _onDeleteIncome(DeleteIncome event, Emitter<IncomeState> emit) async {
+  Future<void> _onDeleteIncome(
+    DeleteIncome event,
+    Emitter<IncomeState> emit,
+  ) async {
     try {
       if (state is IncomeLoaded) {
         emit(const IncomeLoading());
 
         final income = await _database.getIncome(event.id);
-        
+
         // Delete from backend if synced
         if (_settingsService.isSyncEnabled() && income.serverId != null) {
           try {
@@ -150,16 +159,23 @@ class IncomeBloc extends Bloc<IncomeEvent, IncomeState> {
     }
   }
 
-  Future<void> _onSyncIncomes(SyncIncomes event, Emitter<IncomeState> emit) async {
+  Future<void> _onSyncIncomes(
+    SyncIncomes event,
+    Emitter<IncomeState> emit,
+  ) async {
     try {
       if (state is IncomeLoaded && _settingsService.isSyncEnabled()) {
         final currentState = state as IncomeLoaded;
-        emit(IncomeSyncing(
-          incomes: currentState.incomes,
-          totalAmount: currentState.totalAmount,
-        ));
+        emit(
+          IncomeSyncing(
+            incomes: currentState.incomes,
+            totalAmount: currentState.totalAmount,
+          ),
+        );
 
-        final unsyncedIncomes = currentState.incomes.where((income) => !income.synced).toList();
+        final unsyncedIncomes = currentState.incomes
+            .where((income) => !income.synced)
+            .toList();
 
         for (final income in unsyncedIncomes) {
           try {

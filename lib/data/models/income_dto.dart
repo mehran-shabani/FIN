@@ -34,10 +34,7 @@ class IncomeResponseDto {
   @JsonKey(name: 'synced_at')
   final String syncedAt;
 
-  const IncomeResponseDto({
-    required this.serverId,
-    required this.syncedAt,
-  });
+  const IncomeResponseDto({required this.serverId, required this.syncedAt});
 
   factory IncomeResponseDto.fromJson(Map<String, dynamic> json) =>
       _$IncomeResponseDtoFromJson(json);

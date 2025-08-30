@@ -21,10 +21,16 @@ class CurrencyFormatter {
           _formatters[currency] = NumberFormat('#,##0', 'fa_IR');
           break;
         case 'USD':
-          _formatters[currency] = NumberFormat.currency(locale: 'en_US', symbol: '');
+          _formatters[currency] = NumberFormat.currency(
+            locale: 'en_US',
+            symbol: '',
+          );
           break;
         case 'EUR':
-          _formatters[currency] = NumberFormat.currency(locale: 'en_EU', symbol: '');
+          _formatters[currency] = NumberFormat.currency(
+            locale: 'en_EU',
+            symbol: '',
+          );
           break;
         default:
           _formatters[currency] = NumberFormat('#,##0.00');
@@ -70,10 +76,10 @@ class CurrencyFormatter {
   static double? parseAmount(String text, String currency) {
     // Remove currency symbols and whitespace
     String cleaned = text.replaceAll(RegExp(r'[^\d.,]'), '');
-    
+
     // Handle Persian/Arabic numerals
     cleaned = _convertPersianNumerals(cleaned);
-    
+
     // Handle different decimal separators
     if (currency.toUpperCase() == 'IRR') {
       // Persian format: use comma as thousands separator
@@ -93,7 +99,7 @@ class CurrencyFormatter {
         }
       }
     }
-    
+
     return double.tryParse(cleaned);
   }
 
@@ -101,36 +107,36 @@ class CurrencyFormatter {
     const persianNumerals = '۰۱۲۳۴۵۶۷۸۹';
     const arabicNumerals = '٠١٢٣٤٥٦٧٨٩';
     const englishNumerals = '0123456789';
-    
+
     String result = input;
-    
+
     for (int i = 0; i < 10; i++) {
       result = result.replaceAll(persianNumerals[i], englishNumerals[i]);
       result = result.replaceAll(arabicNumerals[i], englishNumerals[i]);
     }
-    
+
     return result;
   }
 
   static String formatLargeNumber(double amount, String currency) {
     const suffixes = ['', 'هزار', 'میلیون', 'میلیارد'];
-    
+
     if (amount < 1000) {
       return formatWithSymbol(amount, currency);
     }
-    
+
     int suffixIndex = 0;
     double displayAmount = amount;
-    
+
     while (displayAmount >= 1000 && suffixIndex < suffixes.length - 1) {
       displayAmount /= 1000;
       suffixIndex++;
     }
-    
+
     final formatter = NumberFormat('#,##0.#', 'fa_IR');
     final formattedAmount = formatter.format(displayAmount);
     final symbol = getCurrencySymbol(currency);
-    
+
     return '$formattedAmount ${suffixes[suffixIndex]} $symbol';
   }
 }

@@ -42,10 +42,7 @@ class ExpenseResponseDto {
   @JsonKey(name: 'synced_at')
   final String syncedAt;
 
-  const ExpenseResponseDto({
-    required this.serverId,
-    required this.syncedAt,
-  });
+  const ExpenseResponseDto({required this.serverId, required this.syncedAt});
 
   factory ExpenseResponseDto.fromJson(Map<String, dynamic> json) =>
       _$ExpenseResponseDtoFromJson(json);

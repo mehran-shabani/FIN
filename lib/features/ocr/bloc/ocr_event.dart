@@ -12,10 +12,7 @@ class ProcessReceiptImage extends OcrEvent {
   final Uint8List imageBytes;
   final String? hints;
 
-  const ProcessReceiptImage({
-    required this.imageBytes,
-    this.hints,
-  });
+  const ProcessReceiptImage({required this.imageBytes, this.hints});
 
   @override
   List<Object?> get props => [imageBytes, hints];

@@ -7,10 +7,7 @@ class ChatMessage {
   final String role; // 'user' or 'assistant'
   final String content;
 
-  const ChatMessage({
-    required this.role,
-    required this.content,
-  });
+  const ChatMessage({required this.role, required this.content});
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>
       _$ChatMessageFromJson(json);
@@ -43,10 +40,7 @@ class ChatRequest {
   final List<ChatMessage> messages;
   final ChatSnapshot snapshot;
 
-  const ChatRequest({
-    required this.messages,
-    required this.snapshot,
-  });
+  const ChatRequest({required this.messages, required this.snapshot});
 
   factory ChatRequest.fromJson(Map<String, dynamic> json) =>
       _$ChatRequestFromJson(json);
@@ -58,9 +52,7 @@ class ChatRequest {
 class ChatResponse {
   final String text;
 
-  const ChatResponse({
-    required this.text,
-  });
+  const ChatResponse({required this.text});
 
   factory ChatResponse.fromJson(Map<String, dynamic> json) =>
       _$ChatResponseFromJson(json);
@@ -73,10 +65,7 @@ class InterpretRequest {
   final String period; // YYYY-MM format
   final List<String>? signals;
 
-  const InterpretRequest({
-    required this.period,
-    this.signals,
-  });
+  const InterpretRequest({required this.period, this.signals});
 
   factory InterpretRequest.fromJson(Map<String, dynamic> json) =>
       _$InterpretRequestFromJson(json);

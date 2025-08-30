@@ -1,11 +1,20 @@
 import 'package:intl/intl.dart';
 
 class AppDateUtils {
-  static final DateFormat _persianDateFormat = DateFormat('yyyy/MM/dd', 'fa_IR');
-  static final DateFormat _persianDateTimeFormat = DateFormat('yyyy/MM/dd - HH:mm', 'fa_IR');
+  static final DateFormat _persianDateFormat = DateFormat(
+    'yyyy/MM/dd',
+    'fa_IR',
+  );
+  static final DateFormat _persianDateTimeFormat = DateFormat(
+    'yyyy/MM/dd - HH:mm',
+    'fa_IR',
+  );
   static final DateFormat _apiDateFormat = DateFormat('yyyy-MM-dd');
   static final DateFormat _monthFormat = DateFormat('yyyy-MM');
-  static final DateFormat _persianMonthFormat = DateFormat('MMMM yyyy', 'fa_IR');
+  static final DateFormat _persianMonthFormat = DateFormat(
+    'MMMM yyyy',
+    'fa_IR',
+  );
 
   // Format date for display
   static String formatPersianDate(DateTime date) {
@@ -88,8 +97,18 @@ class AppDateUtils {
   // Get month name in Persian
   static String getPersianMonthName(int month) {
     const monthNames = [
-      'ژانویه', 'فوریه', 'مارس', 'آوریل', 'مه', 'ژوئن',
-      'ژوئیه', 'اوت', 'سپتامبر', 'اکتبر', 'نوامبر', 'دسامبر'
+      'ژانویه',
+      'فوریه',
+      'مارس',
+      'آوریل',
+      'مه',
+      'ژوئن',
+      'ژوئیه',
+      'اوت',
+      'سپتامبر',
+      'اکتبر',
+      'نوامبر',
+      'دسامبر',
     ];
     return monthNames[month - 1];
   }
@@ -105,7 +124,9 @@ class AppDateUtils {
   static ({DateTime start, DateTime end}) getWeekRange(DateTime date) {
     final weekday = date.weekday;
     final start = date.subtract(Duration(days: weekday - 1));
-    final end = start.add(const Duration(days: 6, hours: 23, minutes: 59, seconds: 59));
+    final end = start.add(
+      const Duration(days: 6, hours: 23, minutes: 59, seconds: 59),
+    );
     return (start: start, end: end);
   }
 
@@ -119,7 +140,9 @@ class AppDateUtils {
   // Check if date is today
   static bool isToday(DateTime date) {
     final now = DateTime.now();
-    return date.year == now.year && date.month == now.month && date.day == now.day;
+    return date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day;
   }
 
   // Check if date is this week
@@ -127,7 +150,7 @@ class AppDateUtils {
     final now = DateTime.now();
     final weekRange = getWeekRange(now);
     return date.isAfter(weekRange.start.subtract(const Duration(seconds: 1))) &&
-           date.isBefore(weekRange.end.add(const Duration(seconds: 1)));
+        date.isBefore(weekRange.end.add(const Duration(seconds: 1)));
   }
 
   // Check if date is this month
@@ -140,12 +163,12 @@ class AppDateUtils {
   static List<DateTime> getRecentMonths(int count) {
     final now = DateTime.now();
     final months = <DateTime>[];
-    
+
     for (int i = 0; i < count; i++) {
       final month = DateTime(now.year, now.month - i, 1);
       months.add(month);
     }
-    
+
     return months;
   }
 
@@ -153,7 +176,7 @@ class AppDateUtils {
   static String convertPersianNumerals(String input) {
     const persianNumerals = '۰۱۲۳۴۵۶۷۸۹';
     const englishNumerals = '0123456789';
-    
+
     String result = input;
     for (int i = 0; i < 10; i++) {
       result = result.replaceAll(persianNumerals[i], englishNumerals[i]);

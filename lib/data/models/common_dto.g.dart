@@ -13,10 +13,7 @@ HealthResponse _$HealthResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$HealthResponseToJson(HealthResponse instance) =>
-    <String, dynamic>{
-      'status': instance.status,
-      'time': instance.time,
-    };
+    <String, dynamic>{'status': instance.status, 'time': instance.time};
 
 AppConfigResponse _$AppConfigResponseFromJson(Map<String, dynamic> json) =>
     AppConfigResponse(
@@ -56,24 +53,20 @@ PushRegisterRequest _$PushRegisterRequestFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$PushRegisterRequestToJson(
-        PushRegisterRequest instance) =>
-    <String, dynamic>{
-      'device_id': instance.deviceId,
-      'platform': instance.platform,
-      'token': instance.token,
-    };
+  PushRegisterRequest instance,
+) => <String, dynamic>{
+  'device_id': instance.deviceId,
+  'platform': instance.platform,
+  'token': instance.token,
+};
 
 PushRegisterResponse _$PushRegisterResponseFromJson(
-        Map<String, dynamic> json) =>
-    PushRegisterResponse(
-      registered: json['registered'] as bool,
-    );
+  Map<String, dynamic> json,
+) => PushRegisterResponse(registered: json['registered'] as bool);
 
 Map<String, dynamic> _$PushRegisterResponseToJson(
-        PushRegisterResponse instance) =>
-    <String, dynamic>{
-      'registered': instance.registered,
-    };
+  PushRegisterResponse instance,
+) => <String, dynamic>{'registered': instance.registered};
 
 DailyEvalRequest _$DailyEvalRequestFromJson(Map<String, dynamic> json) =>
     DailyEvalRequest(
@@ -82,10 +75,7 @@ DailyEvalRequest _$DailyEvalRequestFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$DailyEvalRequestToJson(DailyEvalRequest instance) =>
-    <String, dynamic>{
-      'device_id': instance.deviceId,
-      'date': instance.date,
-    };
+    <String, dynamic>{'device_id': instance.deviceId, 'date': instance.date};
 
 DailyEvalResponse _$DailyEvalResponseFromJson(Map<String, dynamic> json) =>
     DailyEvalResponse(
@@ -104,26 +94,23 @@ Map<String, dynamic> _$DailyEvalResponseToJson(DailyEvalResponse instance) =>
     };
 
 ReceiptReminderRequest _$ReceiptReminderRequestFromJson(
-        Map<String, dynamic> json) =>
-    ReceiptReminderRequest(
-      deviceId: json['device_id'] as String,
-      hourLocal: (json['hour_local'] as num).toInt(),
-      enabled: json['enabled'] as bool,
-    );
+  Map<String, dynamic> json,
+) => ReceiptReminderRequest(
+  deviceId: json['device_id'] as String,
+  hourLocal: (json['hour_local'] as num).toInt(),
+  enabled: json['enabled'] as bool,
+);
 
 Map<String, dynamic> _$ReceiptReminderRequestToJson(
-        ReceiptReminderRequest instance) =>
-    <String, dynamic>{
-      'device_id': instance.deviceId,
-      'hour_local': instance.hourLocal,
-      'enabled': instance.enabled,
-    };
+  ReceiptReminderRequest instance,
+) => <String, dynamic>{
+  'device_id': instance.deviceId,
+  'hour_local': instance.hourLocal,
+  'enabled': instance.enabled,
+};
 
-ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) => ApiResponse(
-      ok: json['ok'] as bool,
-    );
+ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) =>
+    ApiResponse(ok: json['ok'] as bool);
 
 Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-    };
+    <String, dynamic>{'ok': instance.ok};

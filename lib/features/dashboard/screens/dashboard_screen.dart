@@ -45,10 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: const Text('FinSnap'),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _loadData,
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
@@ -76,30 +73,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: Icon(Icons.dashboard),
             label: 'داشبورد',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'تراکنش‌ها',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'تراکنش‌ها'),
           BottomNavigationBarItem(
             icon: Icon(Icons.analytics),
             label: 'گزارش‌ها',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'چت AI',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'تنظیمات',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'چت AI'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'تنظیمات'),
         ],
       ),
-      floatingActionButton: _selectedIndex == 0 ? FloatingActionButton(
-        onPressed: () => _showAddOptionsDialog(),
-        backgroundColor: AppTheme.primaryBlack,
-        foregroundColor: AppTheme.primaryWhite,
-        child: const Icon(Icons.add),
-      ) : null,
+      floatingActionButton: _selectedIndex == 0
+          ? FloatingActionButton(
+              onPressed: () => _showAddOptionsDialog(),
+              backgroundColor: AppTheme.primaryBlack,
+              foregroundColor: AppTheme.primaryWhite,
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 
@@ -189,8 +179,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       title: 'موجودی',
                       amount: balance.abs(),
                       currency: currency,
-                      color: isPositive ? AppTheme.primaryBlack : AppTheme.mediumGray,
-                      icon: isPositive ? Icons.account_balance_wallet : Icons.warning,
+                      color: isPositive
+                          ? AppTheme.primaryBlack
+                          : AppTheme.mediumGray,
+                      icon: isPositive
+                          ? Icons.account_balance_wallet
+                          : Icons.warning,
                       subtitle: isPositive ? 'مثبت' : 'منفی',
                     );
                   },
@@ -260,7 +254,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.add_circle, color: AppTheme.primaryBlack),
+              leading: const Icon(
+                Icons.add_circle,
+                color: AppTheme.primaryBlack,
+              ),
               title: const Text('درآمد'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -272,7 +269,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.remove_circle, color: AppTheme.mediumGray),
+              leading: const Icon(
+                Icons.remove_circle,
+                color: AppTheme.mediumGray,
+              ),
               title: const Text('هزینه دستی'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -284,13 +284,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.camera_alt, color: AppTheme.primaryBlack),
+              leading: const Icon(
+                Icons.camera_alt,
+                color: AppTheme.primaryBlack,
+              ),
               title: const Text('اسکن رسید'),
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const AddExpenseScreen(scanReceipt: true),
+                    builder: (context) =>
+                        const AddExpenseScreen(scanReceipt: true),
                   ),
                 );
               },

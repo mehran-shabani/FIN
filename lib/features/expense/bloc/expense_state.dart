@@ -37,14 +37,14 @@ class ExpenseLoaded extends ExpenseState {
 
   @override
   List<Object?> get props => [
-        expenses,
-        totalAmount,
-        categoryTotals,
-        appliedCategory,
-        appliedFromDate,
-        appliedToDate,
-        appliedSearchQuery,
-      ];
+    expenses,
+    totalAmount,
+    categoryTotals,
+    appliedCategory,
+    appliedFromDate,
+    appliedToDate,
+    appliedSearchQuery,
+  ];
 }
 
 class ExpenseError extends ExpenseState {

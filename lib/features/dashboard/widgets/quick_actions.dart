@@ -48,7 +48,8 @@ class QuickActions extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const AddExpenseScreen(scanReceipt: true),
+                  builder: (context) =>
+                      const AddExpenseScreen(scanReceipt: true),
                 ),
               );
             },
@@ -89,9 +90,9 @@ class _QuickActionButton extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               label,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: color,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.labelLarge?.copyWith(color: color),
             ),
           ],
         ),

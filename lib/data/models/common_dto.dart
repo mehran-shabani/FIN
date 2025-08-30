@@ -7,10 +7,7 @@ class HealthResponse {
   final String status;
   final String time;
 
-  const HealthResponse({
-    required this.status,
-    required this.time,
-  });
+  const HealthResponse({required this.status, required this.time});
 
   factory HealthResponse.fromJson(Map<String, dynamic> json) =>
       _$HealthResponseFromJson(json);
@@ -82,9 +79,7 @@ class PushRegisterRequest {
 class PushRegisterResponse {
   final bool registered;
 
-  const PushRegisterResponse({
-    required this.registered,
-  });
+  const PushRegisterResponse({required this.registered});
 
   factory PushRegisterResponse.fromJson(Map<String, dynamic> json) =>
       _$PushRegisterResponseFromJson(json);
@@ -98,10 +93,7 @@ class DailyEvalRequest {
   final String deviceId;
   final String date; // YYYY-MM-DD format
 
-  const DailyEvalRequest({
-    required this.deviceId,
-    required this.date,
-  });
+  const DailyEvalRequest({required this.deviceId, required this.date});
 
   factory DailyEvalRequest.fromJson(Map<String, dynamic> json) =>
       _$DailyEvalRequestFromJson(json);
@@ -115,11 +107,7 @@ class DailyEvalResponse {
   final String? summary;
   final Map<String, double>? totals;
 
-  const DailyEvalResponse({
-    required this.ready,
-    this.summary,
-    this.totals,
-  });
+  const DailyEvalResponse({required this.ready, this.summary, this.totals});
 
   factory DailyEvalResponse.fromJson(Map<String, dynamic> json) =>
       _$DailyEvalResponseFromJson(json);
@@ -151,9 +139,7 @@ class ReceiptReminderRequest {
 class ApiResponse {
   final bool ok;
 
-  const ApiResponse({
-    required this.ok,
-  });
+  const ApiResponse({required this.ok});
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) =>
       _$ApiResponseFromJson(json);

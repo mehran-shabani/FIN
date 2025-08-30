@@ -7,17 +7,17 @@ part of 'expense_dto.dart';
 // **************************************************************************
 
 ExpenseDto _$ExpenseDtoFromJson(Map<String, dynamic> json) => ExpenseDto(
-      clientId: json['client_id'] as String,
-      amount: (json['amount'] as num).toDouble(),
-      currency: json['currency'] as String,
-      date: json['date'] as String,
-      merchant: json['merchant'] as String?,
-      category: json['category'] as String,
-      tax: (json['tax'] as num?)?.toDouble() ?? 0,
-      tip: (json['tip'] as num?)?.toDouble() ?? 0,
-      note: json['note'] as String?,
-      source: json['source'] as String? ?? 'manual',
-    );
+  clientId: json['client_id'] as String,
+  amount: (json['amount'] as num).toDouble(),
+  currency: json['currency'] as String,
+  date: json['date'] as String,
+  merchant: json['merchant'] as String?,
+  category: json['category'] as String,
+  tax: (json['tax'] as num?)?.toDouble() ?? 0,
+  tip: (json['tip'] as num?)?.toDouble() ?? 0,
+  note: json['note'] as String?,
+  source: json['source'] as String? ?? 'manual',
+);
 
 Map<String, dynamic> _$ExpenseDtoToJson(ExpenseDto instance) =>
     <String, dynamic>{
